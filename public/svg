@@ -1,0 +1,62 @@
+#progress{
+    position: fixed;
+    /*background: #194eb9;*/
+    z-index: 1000;
+    bottom: 60px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    display: none;
+    place-items: center;
+    border-radius: 50%;
+    color: #1d002c;
+    box-shadow: rgba(50,50,93,0.25)0px 50px 10px -20px, 
+                rgba(0,0,0,0.3)0px 30px 60px -30px, 
+                rgba(10,37,64,0.35)0px -2px 6px 0px inset;
+}
+
+#progress-value{
+    display: grid;
+    height: calc(100% - 12px);
+    width: calc(100% - 12px);
+    background: var(--gradient-color-bg);
+    border-radius: 50%;
+    color: #fff;
+    place-items: center;
+    font-size: 25px;
+}
+
+
+//side progress bar
+let calcScrollValue = ()=>{
+    let scrollProgress = document.getElementById("progress");
+    let pos = document.documentElement.scrollTop;
+
+    let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrollValue = Math.round((pos * 100)/calcHeight);
+
+    if(pos > 100){
+        scrollProgress.style.display = "grid";
+    }else{
+        scrollProgress.style.display ="none";
+    }
+
+    scrollProgress.addEventListener("click",()=>{
+        document.documentElement.scrollTop = 0;
+    });
+
+    scrollProgress.style.background = `conic-gradient(#fff ${scrollValue}%, #194eb9 ${scrollValue}%)`;
+};
+
+window.onscroll = calcScrollValue;
+window.onload = calcScrollValue;
+
+
+<div id="progress">
+    <span id="progress-value">
+        <i class="bx bxs-chevrons-up"></i>
+    </span>
+</div>
+
+<!--Scroll Reveal-->
+<script src="https://unpkg.com/scrollreveal"></script>
